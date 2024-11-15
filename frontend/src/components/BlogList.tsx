@@ -58,7 +58,8 @@ export const BlogList = ({ category }: BlogListProps) => {
       fetchBlogs();
     } catch (error) {
       console.error(`Error following user:`, error);
-      toast.error(error.response.data.error);
+      toast.error((error as any).response?.data?.error || 'Failed to delete comment');
+
     }
   };
 
@@ -66,7 +67,7 @@ export const BlogList = ({ category }: BlogListProps) => {
     setCommentInputs((prev) => ({ ...prev, [blogId]: value }));
   };
 
-  const openCommentsModal = (comments, postId) => {
+  const openCommentsModal = (comments: any, postId: any) => {
     setCurrentComments(comments);
     setCurrentPostId(postId);
     setShowCommentsModal(true);
@@ -105,7 +106,7 @@ export const BlogList = ({ category }: BlogListProps) => {
                 onClick={() => toggleFollow(blog.user._id)}
                 className="text-sm text-blue-600 hover:text-blue-700"
               >
-                {blog.user.follower.includes(loggedInUser) ? "unfollow" : "follow"}
+                {blog.user.follower.includes(loggedInUser!) ? "unfollow" : "follow"}
               </button>
             </div>
           </div>
@@ -127,7 +128,7 @@ export const BlogList = ({ category }: BlogListProps) => {
                 onClick={() => toggleLike(blog._id)}
                 className="cursor-pointer flex items-center space-x-1 text-sm text-gray-600"
               >
-                {blog.likes.includes(loggedInUser) ? (
+                {blog.likes.includes(loggedInUser!) ? (
                   <FaHeart className="text-red-500 text-xl" />
                 ) : (
                   <FaRegHeart className="text-gray-500 text-lg" />

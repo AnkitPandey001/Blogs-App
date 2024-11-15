@@ -2,13 +2,22 @@ import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
-
 interface User {
   _id: string;
   fullname: string;
   email: string;
-  follower: string[];
-  following: string[];
+  follower: {
+    _id: string;
+    username: string;
+    fullname: string;
+    profileImg: string;
+  }[];
+  following: {
+    _id: string;
+    username: string;
+    fullname: string;
+    profileImg: string;
+  }[];
   profileImg: string;
   coverImg: string;
   bio: string;

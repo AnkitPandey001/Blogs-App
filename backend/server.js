@@ -9,6 +9,7 @@ import {v2 as cloudinary} from 'cloudinary'
 import Postroutes from "./routes/postRoutes.js";
 import cors from 'cors'
 dotenv.config();
+import path from 'path'
 
 cloudinary.config({
     cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
@@ -17,6 +18,8 @@ cloudinary.config({
 })
 
 const app = express();
+const __dirname = path.resolve();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
@@ -33,6 +36,12 @@ app.use('/api/post',Postroutes)
 
 //! listeing to server
 
+if(process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname,"/frontend/dist")));
+    app.get('*',(req,res)=>{
+        res.sendFile(path.resolve(__dirname,"frontend","dist","index.html"))
+    })
+}
 
 const PORT = process.env.PORT
 app.listen(PORT,()=>{

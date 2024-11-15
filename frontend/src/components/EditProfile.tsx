@@ -32,6 +32,7 @@ export const EditProfile = () => {
   };
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>, fieldName: string) => {
+    if (!e.target.files || e.target.files.length === 0) return;
     const file = e.target.files[0];
     if (!file) return;
 
@@ -60,7 +61,7 @@ export const EditProfile = () => {
       updateUser();
       fetchBlogs();
     } catch (error) {
-      toast.error(error.response.data.error);
+      toast.error((error as any).response?.data?.error || 'Failed to delete comment');
       console.error("Error updating profile:", error);
     }
   };

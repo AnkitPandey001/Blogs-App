@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FollowerDetails } from "../components/FollowerDetails";
 import { FollowingUserPost } from "../components/FollowingUserPost";
+import '../index.css'
 
 export const Profile = () => {
   const { user, updateUser } = useAuth();
@@ -29,7 +30,11 @@ export const Profile = () => {
   }, []);
 
   if (!user) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <div className="loader"></div>
+      </div>
+    );
   }
 
   const handleCreatePostClick = () => {
@@ -65,8 +70,8 @@ export const Profile = () => {
   const handleFollowFollowingClick = () => {
     setShowFollowingModal(true);
   };
-
-  const handleDeletePost = async (postId) => {
+ 
+  const handleDeletePost = async (postId: any) => {
     try {
       await axios.delete(`http://localhost:8000/api/post/${postId}`, {
         headers: {
@@ -100,7 +105,8 @@ export const Profile = () => {
       navigate("/login");
     } catch (error) {
       console.log(error);
-      toast.success(error.response.data.error);
+      toast.error((error as any).response?.data?.error || 'Failed to delete comment');
+
     }
   };
 

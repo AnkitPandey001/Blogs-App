@@ -18,6 +18,7 @@ interface Blog {
   _id: string;
   user: User;
   text: string;
+  img:string;
   likes: string[];
   category: string;
   title: string;

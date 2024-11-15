@@ -18,15 +18,17 @@ export const CreatePost = () => {
 
   const { uploadImage, uploading } = useImageUpload();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name as string]: value,
+      [name]: value,
     }));
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+
     const file = e.target.files[0];
     if (!file) return;
 
@@ -57,7 +59,7 @@ export const CreatePost = () => {
       updateUser();
       fetchBlogs();
     } catch (error) {
-      toast.error(error.response?.data?.error || "Error creating post");
+      toast.error((error as any).response?.data?.error || 'Failed to delete comment');
       console.error("Error creating post:", error);
     }
   };

@@ -23,7 +23,7 @@ interface Post {
   text: string;
   title: string;
   user: string;
-  image?: string; // Add an optional image field
+  img?: string; 
 }
 
 export const UserProfile = () => {
@@ -47,7 +47,7 @@ export const UserProfile = () => {
           }
         );
         setUser(response.data.user);
-        setPosts(response.data.posts); // Assuming the API returns posts as well
+        setPosts(response.data.posts); 
         setLoading(false);
       } catch (error) {
         setError("An error occurred while fetching the data.");

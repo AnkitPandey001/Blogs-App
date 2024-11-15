@@ -50,7 +50,7 @@ export const Coments = ({ comments, onClose, postId }: CommentsProps) => {
       fetchBlogs()
     } catch (error) {
       console.error('Error deleting comment:', error);
-      toast.error(error.response?.data?.error || 'Failed to delete comment');
+      toast.error((error as any).response?.data?.error || 'Failed to delete comment');
     }
   };
 
